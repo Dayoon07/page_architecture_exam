@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.e.model.mapper.QnaMapper">
+
+	<resultMap type="test.e.model.vo.QnaVo" id="QnaMap">
+		<result column="id" property="id" />
+		<result column="category" property="category" />
+		<result column="qna_title" property="qnaTitle" />
+		<result column="qna_content" property="qnaContent" />
+	</resultMap>
+
+	<select id="findAll" resultMap="QnaMap">
+		SELECT * FROM qna ORDER BY id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO qna(category, qna_title, qna_content)
+		VALUES(#{ category }, #{ qnaTitle }, #{ qnaContent })
+	</insert>
+	
+	<select id="selectByCategoryIsDb" resultMap="QnaMap">
+		SELECT * FROM qna WHERE category = 'DB'
+	</select>
+	
+	<select id="selectByCategoryIsSpring" resultMap="QnaMap">
+		SELECT * FROM qna WHERE category = 'Spring'
+	</select>
+	
+	<select id="selectByCategoryIsJava" resultMap="QnaMap">
+		SELECT * FROM qna WHERE category = 'Java'
+	</select>
+	
+	<select id="selectByCategoryIsFront" resultMap="QnaMap">
+		SELECT * FROM qna WHERE category = 'Front'
+	</select>
+	
+	<select id="selectById" resultMap="QnaMap">
+		SELECT * FROM qna WHERE id = #{ qndId }
+	</select>
+
+	<select id="searchMapper" resultMap="QnaMap">
+		SELECT * FROM qna
+		    WHERE category LIKE '%' || '#{ rs }' || '%' OR
+		    qna_title LIKE '%' || '#{ rs }' || '%' OR
+		    qna_content LIKE '%' || '#{ rs }' || '%'
+	</select>
+
+
+
+
+</mapper>
