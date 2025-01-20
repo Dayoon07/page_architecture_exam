@@ -14,4 +14,5 @@ public interface FrontUsersMapper {
             @Param("userid3") String userid3, @Param("password") String password);
 	FrontUsersVo login(@Param("userid1") String userid1, @Param("userid2") String userid2, 
             @Param("userid3") String userid3, @Param("password") String password);
+	List<FrontUsersVo> findById(@Param("id") int id);
 }

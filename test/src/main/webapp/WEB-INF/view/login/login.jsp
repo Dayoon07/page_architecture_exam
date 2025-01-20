@@ -21,7 +21,7 @@
         </div>
         <div>
         	<c:if test="${ not empty sessionScope.user }">
-        		<p class="py-2 px-4">${ sessionScope.user.password }님 안녕하세요!</p>
+        		<p class="py-2 px-4">${ sessionScope.user.name }님 안녕하세요!</p>
         	</c:if>
         </div>
     </header>

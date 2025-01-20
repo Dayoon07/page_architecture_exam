@@ -18,5 +18,9 @@
 			userid3 = #{ userid3 } AND
 			password = #{ password }
 	</select>
+	
+	<select id="findById" resultType="test.e.model.vo.FrontUsersVo" parameterType="String">
+		SELECT * FROM frontusers WHERE id = #{ id }
+	</select>
 
 </mapper>

@@ -26,4 +26,8 @@ public class FrontUsersService {
 		return mapper.login(userid1, userid2, userid3, password);
 	}
 	
+	public List<FrontUsersVo> findById(int id) {
+		return mapper.findById(id);
+	}
+	
 }

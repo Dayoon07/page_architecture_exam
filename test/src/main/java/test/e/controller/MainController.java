@@ -1,5 +1,7 @@
 package test.e.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +24,16 @@ public class MainController {
 	@Autowired
 	private QnaService qnaService;
 	
-	
-
 	@GetMapping("/")
-	public String index(Model m) {
+	public String index(Model m, HttpSession s) {
+		if (s.getAttribute("user") == null) return "login/login";
 		m.addAttribute("allQuestion", qnaService.findAll());
 		m.addAttribute("dbQuestion", qnaService.selectByCategoryIsDb());
 		m.addAttribute("javaQuestion", qnaService.selectByCategoryIsJava());
 		m.addAttribute("springQuestion", qnaService.selectByCategoryIsSpring());
 		m.addAttribute("frontQuestion", qnaService.selectByCategoryIsFront());
-		return "main/main";
+		m.addAttribute("dashboardFindAll", frontUsersService.findAll());
+		return "dashboard/dashboard";
 	}
 	
 	@GetMapping("/login")
@@ -45,7 +47,8 @@ public class MainController {
 	}
 	
 	@GetMapping("/main")
-	public String qnaPage(Model model) {
+	public String qnaPage(Model model, HttpSession s) {
+		if (s.getAttribute("user") == null) return "login/login";
 		model.addAttribute("allQuestion", qnaService.findAll());
 		model.addAttribute("dbQuestion", qnaService.selectByCategoryIsDb());
 		model.addAttribute("javaQuestion", qnaService.selectByCategoryIsJava());
@@ -70,6 +73,16 @@ public class MainController {
 	    return "redirect:/";
 	}
 	
+	@PostMapping("/logout")
+	public String logout(HttpSession s,
+			@RequestParam int id) {
+		FrontUsersVo user = (FrontUsersVo) s.getAttribute("user");
+		if (user.getId() == id) {
+			s.invalidate();
+		}
+		return "login/login";
+	}
+	
 	@PostMapping("/qnaQuestion")
 	public String write(@RequestParam String category,
 			@RequestParam String qnaContent,
@@ -90,6 +103,12 @@ public class MainController {
 		m.addAttribute("searchResult", qnaService.searchMapper(rs));
 		m.addAttribute("searchWord", rs);
 		return "etc/searchResult";
+	}
+	
+	@GetMapping("/dashboard")
+	public String dashboardPage(Model m) {
+		m.addAttribute("dashboardFindAll", frontUsersService.findAll());
+		return "dashboard/dashboard";
 	}
 	
 }

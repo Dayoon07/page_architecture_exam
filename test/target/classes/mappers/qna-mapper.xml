@@ -40,9 +40,9 @@
 
 	<select id="searchMapper" resultMap="QnaMap">
 		SELECT * FROM qna
-		    WHERE category LIKE '%' || '#{ rs }' || '%' OR
-		    qna_title LIKE '%' || '#{ rs }' || '%' OR
-		    qna_content LIKE '%' || '#{ rs }' || '%'
+		    WHERE category LIKE '%' || #{ rs } || '%' OR
+		    qna_title LIKE '%' || #{ rs } || '%' OR
+		    qna_content LIKE '%' || #{ rs } || '%'
 	</select>
 
 
